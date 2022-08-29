@@ -9,11 +9,11 @@
 #  Max((5, 10)) = 10
 
 class Vector(object):
-    def __init__(self, *arg):
+    def __init__(self, *args):
         '''
         Create a Vector, example : v = Vector(5, 10)
         '''
-        if len(arg) == 0:
+        if len(args) == 0:
             self._x, self._y = 0, 0
         else:
             self._x, self._y = args
@@ -31,7 +31,7 @@ class Vector(object):
         return Vector(self._x + other._x, self._y + other._y)
 
     def __mul__(self, other):
-        return Vector(self._x * other._x, self._y * other._y) 
+        return Vector(self._x * other, self._y * other) 
     
     def __bool__(self):
         return bool(max(self._x, self._y))
@@ -42,6 +42,17 @@ v2 = Vector(23, 35)
 v3 = Vector()
 
 # 매직메소드 출력
+print(Vector.__init__.__doc__)
+print(Vector.__repr__.__doc__)
+print(Vector.__add__.__doc__)
+print(v1, v2, v3)
+print(v1 + v2)
+print(v1 * 3)
+print(v2 * 10)
+print(bool(v1), bool(v2))
+print(bool(v3))
+
+
 
 
 print(Vector.__init__.__doc__)
