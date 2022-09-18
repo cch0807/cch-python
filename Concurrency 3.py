@@ -26,5 +26,39 @@ cr1 = coroutine1()
 print(cr1)
 print(type(cr1))
 
-next(cr1)
-next(cr1)
+# yield 지점까지 서브루틴 수행
+# next(cr1)
+# next(cr1)
+
+# 기본 전달 값 None
+# 값 전송
+
+# cr1.send(100)
+
+# # 잘못된 사용
+# cr2 = coroutine1()
+
+# cr2.send(100)
+
+# 코루틴 Ex2
+# GEN_CREATED : 처음 대기 상태
+# GEN_RUNNING : 실행 상태
+# GEN_SUSPENDED : Yield 대기 상태
+# GEN_CLOSED : 실행 완료 상태
+
+def coroutine2(x):
+    print('>>> coroutine started : {}'.format(x))
+    y = yield x
+    print('>>> coroutine received : {}'.format(y))
+    z = yield x + y
+    print('>>> coroutine received : {}'.format(z))
+
+cr3 = coroutine2(10)
+
+from inspect import getgeneratorstate
+
+print(getgeneratorstate)
+
+print(next(cr3))
+cr3.send(100)
+cr3.send(100)
