@@ -15,6 +15,7 @@ import asyncio
 import timeit
 from urllib.request import urlopen
 from concurrent.futures import ThreadPoolExecutor
+from bs4 import BeautifulSoup
 import threading
 
 # 실행 시작 시간
@@ -30,11 +31,23 @@ async def exam():
     pass
 
 async def fetch(url, executor):
+    # 쓰레드명 출력
+    print('Thread Name : ', threading.current_thread().getName(), 'Start', url)
+
     # 실행
     res = await loop.run_in_executor(executor, urlopen, url)
 
+    soup = BeautifulSoup(res.read(), 'html.parser')
+
+    # 전체 페이지 소스 확인
+    # print(soup.prettify())
+    result_data = soup.title
+
+    print('Thread Name : ', threading.current_thread().getName(), 'Done', url)
+
     # 결과 반환
-    return res.read()
+    # return res.read()[0:5]
+    return result_data
 
 
 async def main():
@@ -63,3 +76,4 @@ if __name__ == '__main__':
     duration = timeit.default_timer() - start
     # 총 실행 시간
     print('Total Running Time : ', duration)
+
