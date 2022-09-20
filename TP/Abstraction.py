@@ -12,6 +12,7 @@ __doc__: class의 주석을 확인한다.
 __class__: 어떤 클래스로 만들어진 인스턴스인지 확인할 수 있다.
 """
 
+
 # siri_name = "siri"
 
 # siri_code = 210129301
@@ -39,6 +40,13 @@ __class__: 어떤 클래스로 만들어진 인스턴스인지 확인할 수 있
 
 
 class Robot:
+    """
+    [Robot Class]
+    Author : 최창현
+    Role : ???
+
+    """
+
     population = 0
 
     # 생성자 함수
@@ -74,6 +82,17 @@ class Robot:
         # self는 인스턴스를 받고 cls 클래스를 받음
         print(f"We have {cls.population} robots.")
 
+    @staticmethod
+    def this_is_robot_cls():
+        print("yes")
+
+    def __str__(self):
+        return f"{self.name} robot!!"
+
+    def __call__(self):
+        print("call!!")
+        return f"{self.name} call!!"
+
 
 siri = Robot("siri", 234918512)
 jarvis = Robot("jarvis", 15212352)
@@ -87,3 +106,40 @@ siri.say_hi()
 siri.cal_add(1, 2)
 
 Robot.how_many()
+
+print(Robot.__dict__)
+
+print(siri.__dict__)
+
+print(jarvis.__dict__)
+
+print(siri.name)
+print(bixby.name)
+
+siri.cal_add(2, 3)
+
+print(siri.population)
+
+siri.how_many()
+
+# Robot.say_hi()
+
+# 아래 두 줄의 코드는 같은 의미
+siri.say_hi()
+Robot.say_hi(siri)
+
+print(dir(siri))
+print(dir(Robot))
+
+print(Robot.__doc__)
+
+print(siri.__class__)
+
+print(Robot.this_is_robot_cls())
+
+siri.this_is_robot_cls()
+
+print(siri.__str__)
+print(siri.__str__())
+
+siri()
