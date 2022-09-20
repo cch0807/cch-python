@@ -7,12 +7,15 @@ def closure_ex1():
     # Free variable
     # 클로저 영역
 
-    series= []
+    series = []
+
     def averager(v):
         series.append(v)
-        print(f'inner >>> {series} / {len(series)}')
+        print(f"inner >>> {series} / {len(series)}")
         return sum(series) / len(series)
+
     return averager
+
 
 avg_closure1 = closure_ex1()
 
@@ -45,11 +48,14 @@ def closure_ex2():
         cnt += 1
         total += v
         return total / cnt
+
     return averager
+
 
 avg_closure2 = closure_ex2()
 
 # print(avg_closure2(10)) # 예외
+
 
 def closure_ex3():
     # Free variable
@@ -61,7 +67,9 @@ def closure_ex3():
         cnt += 1
         total += v
         return total / cnt
+
     return averager
+
 
 avg_closure3 = closure_ex3()
 

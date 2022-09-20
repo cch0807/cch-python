@@ -1,21 +1,25 @@
 import threading
 import time
 
+
 def before_work():
     evt.set()
-    print('* before work, done')
+    print("* before work, done")
+
 
 def after_work():
-    print('** after work, waiting')
+    print("** after work, waiting")
     evt.wait()
-    print('** after work, done')
+    print("** after work, done")
+
 
 def check_state():
-    print('*** check state', evt.is_set())
+    print("*** check state", evt.is_set())
     evt.wait()
-    print('*** check state,', evt.is_set())
+    print("*** check state,", evt.is_set())
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     evt = threading.Event()
     after_thr = threading.Thread(target=after_work)
     before_thr = threading.Thread(target=before_work)

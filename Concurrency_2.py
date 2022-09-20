@@ -3,12 +3,14 @@
 
 # Generator Ex1
 
+
 def generator_ex1():
-    print('Start')
-    yield 'A Point'
-    print('Continue')
-    yield 'B Point'
-    print('End')
+    print("Start")
+    yield "A Point"
+    print("Continue")
+    yield "B Point"
+    print("End")
+
 
 temp = iter(generator_ex1())
 
@@ -52,7 +54,7 @@ print(next(gen1))
 
 # 조건
 
-gen2 = itertools.takewhile(lambda n : n < 1000, itertools.count(1, 2.5))
+gen2 = itertools.takewhile(lambda n: n < 1000, itertools.count(1, 2.5))
 
 print(gen2)
 
@@ -62,7 +64,7 @@ for v in gen2:
 print()
 
 # 필터 반대
-gen3 = itertools.filterfalse(lambda n : n < 3, [1, 2, 3, 4, 5])
+gen3 = itertools.filterfalse(lambda n: n < 3, [1, 2, 3, 4, 5])
 
 for v in gen3:
     print(v)
@@ -78,28 +80,28 @@ for v in gen4:
     print(v)
 
 # 연결1
-gen5 = itertools.chain('ABCDE', range(1, 11, 2))
+gen5 = itertools.chain("ABCDE", range(1, 11, 2))
 print(list(gen5))
 
 # 연결2
-gen6 = itertools.chain(enumerate('ABCDE'))
+gen6 = itertools.chain(enumerate("ABCDE"))
 
 print(list(gen6))
 
 # 개별
-gen7 = itertools.product('ABCDE')
+gen7 = itertools.product("ABCDE")
 
 print(list(gen7))
 
 # 연산(경우의 수)
-gen8 = itertools.product('ABCDE', repeat=2)
+gen8 = itertools.product("ABCDE", repeat=2)
 
 print(list(gen8))
 
 # 그룹화
-gen9 = itertools.groupby('AAAABBCCCCDDDEE')
+gen9 = itertools.groupby("AAAABBCCCCDDDEE")
 
 # print(list(gen9))
 
 for chr, group in gen9:
-    print(chr, ' : ', list(group))
+    print(chr, " : ", list(group))

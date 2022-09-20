@@ -5,11 +5,11 @@
 # 불변(tuple, str, bytes)
 # 리스트 및 튜플 고급
 
-a = [3, 3.0, 'a']
+a = [3, 3.0, "a"]
 print(a)
 
 # 지능형 리스트(Comprehending Lists)
-chars = '+_)(*&^%$#@!'
+chars = "+_)(*&^%$#@!"
 
 code_list1 = []
 
@@ -26,7 +26,7 @@ print(code_list2)
 
 # Comprehending Lists + Map, Filter
 code_list3 = [ord(s) for s in chars if ord(s) > 40]
-code_list4 = list(filter(lambda x : x > 40, map(ord, chars)))
+code_list4 = list(filter(lambda x: x > 40, map(ord, chars)))
 
 # 출력
 print(code_list3)
@@ -39,7 +39,7 @@ import array
 
 # Generator : 한 번에 한 개의 항목을 생성(메모리 유지X)
 tuple_g = (ord(s) for s in chars)
-array_g = (array.array('I', (ord(s) for s in chars)))
+array_g = array.array("I", (ord(s) for s in chars))
 
 print(type(tuple_g))
 print(next(tuple_g))
@@ -50,14 +50,14 @@ print()
 print()
 
 # 제네레이터 예제
-print(('%s' % c + str(n) for c in ['A', 'B', 'C', 'D'] for n in range(1,21)))
+print(("%s" % c + str(n) for c in ["A", "B", "C", "D"] for n in range(1, 21)))
 
-for s in ('%s' % c + str(n) for c in ['A', 'B', 'C', 'D'] for n in range(1,21)):
+for s in ("%s" % c + str(n) for c in ["A", "B", "C", "D"] for n in range(1, 21)):
     print(s)
 
 # 리스트 주의
-marks1 = [['~'] * 3 for _ in range(4)]
-marks2 = [['~'] * 3] * 4
+marks1 = [["~"] * 3 for _ in range(4)]
+marks2 = [["~"] * 3] * 4
 
 print(marks1)
 print(marks2)
@@ -65,8 +65,8 @@ print(marks2)
 print()
 
 # 수정
-marks1[0][1] = 'x'
-marks2[0][1] = 'x'
+marks1[0][1] = "x"
+marks2[0][1] = "x"
 
 print(marks1)
 print(marks2)

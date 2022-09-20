@@ -56,21 +56,21 @@ print()
 # reverse, key=len, key=str.lower, key=func...
 
 # sorted : 정렬 후 새로운 객체 반환
-f_list = ['orange', 'apple', 'mango', 'papaya', 'lemon', 'strawberry', 'coconut']
-print('sorted - ', sorted(f_list))
-print('sorted - ', sorted(f_list, reverse=True))
-print('sorted - ', sorted(f_list, key=len))
-print('sorted - ', sorted(f_list, key=lambda x: x[-1], reverse=True))
+f_list = ["orange", "apple", "mango", "papaya", "lemon", "strawberry", "coconut"]
+print("sorted - ", sorted(f_list))
+print("sorted - ", sorted(f_list, reverse=True))
+print("sorted - ", sorted(f_list, key=len))
+print("sorted - ", sorted(f_list, key=lambda x: x[-1], reverse=True))
 
-print('sorted - ', f_list)
+print("sorted - ", f_list)
 
 # sort : 정렬 후 객체 직접 변경
 # 반환 값 확인(None)
-print('sort - ', f_list.sort(), f_list)
-print('sort - ', f_list.sort(reverse=True), f_list)
-print('sort - ', f_list.sort(key=len), f_list)
-print('sort - ', f_list.sort(key=lambda x : x[-1]), f_list)
-print('sort - ', f_list.sort(key=lambda x : x[-1], reverse=True), f_list)
+print("sort - ", f_list.sort(), f_list)
+print("sort - ", f_list.sort(reverse=True), f_list)
+print("sort - ", f_list.sort(key=len), f_list)
+print("sort - ", f_list.sort(key=lambda x: x[-1]), f_list)
+print("sort - ", f_list.sort(key=lambda x: x[-1], reverse=True), f_list)
 
 # List vs Array 적합 한 사용법
 # 리스트 기반 : 융퉁성! 다양한 자료형, 범용적 사용, 잘 사용하면 속도 빠름

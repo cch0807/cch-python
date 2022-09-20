@@ -4,14 +4,20 @@
 
 import os
 import time
-from concurrent.futures import wait, as_completed, ThreadPoolExecutor, ProcessPoolExecutor
+from concurrent.futures import (
+    wait,
+    as_completed,
+    ThreadPoolExecutor,
+    ProcessPoolExecutor,
+)
 
 WORK_LIST = [10000, 10000000, 100000000, 100000000]
 
 # 동시성 합계 계산 메인 함수
 # 누적 합계 함수(제네레이터)
 def sum_generator(n):
-    return sum(n for n in range(1, n+1))
+    return sum(n for n in range(1, n + 1))
+
 
 # wait
 # as_completed
@@ -33,9 +39,9 @@ def main():
             # 스케쥴링
             futures_list.append(future)
             # 스케쥴링 확인
-            print('Scheduled for {} : {}'.format(work, future) +'\n')
+            print("Scheduled for {} : {}".format(work, future) + "\n")
             print()
-        
+
         # # wait 결과 출력
         # result = wait(futures_list, timeout=7)
         # # 성공
@@ -52,18 +58,18 @@ def main():
             cancelled = future.cancelled
 
             # future 결과 확인
-            print('Future Result : {}, Done : {}'.format(result, done))
-            print('Future Cancelled : {}'.format(cancelled))
-
+            print("Future Result : {}, Done : {}".format(result, done))
+            print("Future Cancelled : {}".format(cancelled))
 
     # 종료 시간
     end_time = time.time() - start_time
 
     # 출력 포멧
-    msg = '\n Time : {:.2f}s'
+    msg = "\n Time : {:.2f}s"
     # 최종 결과 출력
     print(msg.format(end_time))
 
+
 # 실행
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
