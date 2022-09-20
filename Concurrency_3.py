@@ -8,17 +8,19 @@
 # 코루틴 제어, 상태, 양방향 전송
 
 # 서브루틴, 메인루틴 호출 -> 서브루틴에서 수행(흐름 제어)
-# 코루틴 : 루틴 실행 중 중지 (시점 기억) -> 동시성 프로그래밍 
+# 코루틴 : 루틴 실행 중 중지 (시점 기억) -> 동시성 프로그래밍
 # 코루틴 : 스레드에 비해 오버헤드 감소
 # 스레드 : 싱글스레드 -> 멀티스레드 -> 복잡 -> 공유되는 자원 -> 교착 상태 발생 가능성, 컨텍스트 스위칭 비용이 발생, 자원 소비 가능성 증가
 # 3.5 이상 def -> async , yield -> await
 
 # 코루틴 Ex1
 
+
 def coroutine1():
-    print('>>> coroutine started.')
+    print(">>> coroutine started.")
     i = yield
-    print('>>> coroutine recived: {}'.format(i))
+    print(">>> coroutine recived: {}".format(i))
+
 
 # 메인 루틴
 # 제네레이터 선언
@@ -47,13 +49,15 @@ print(type(cr1))
 # GEN_SUSPENDED : Yield 대기 상태
 # GEN_CLOSED : 실행 완료 상태
 
+
 def coroutine2(x):
-    print('>>> coroutine started : {}'.format(x))
+    print(">>> coroutine started : {}".format(x))
     y = yield x
-    print('>>> coroutine received : {}'.format(y))
+    print(">>> coroutine received : {}".format(y))
     z = yield x + y
-    print('>>> coroutine received : {}'.format(z))
+    print(">>> coroutine received : {}".format(z))
     t = yield
+
 
 cr3 = coroutine2(10)
 
@@ -72,14 +76,16 @@ print()
 # StopIteration 자동 처리(3.5 -> await)
 # 중첩 코루틴 처리
 
+
 def generator1():
-    for x in 'AB':
+    for x in "AB":
         yield x
-    
-    for y in range(1,4):
+
+    for y in range(1, 4):
         yield y
 
-t1 =generator1()
+
+t1 = generator1()
 
 print(next(t1))
 print(next(t1))
@@ -94,9 +100,11 @@ print(list(t2))
 print()
 print()
 
+
 def generator2():
-    yield from 'AB'
-    yield from range(1,4)
+    yield from "AB"
+    yield from range(1, 4)
+
 
 t3 = generator2()
 
@@ -105,4 +113,3 @@ print(next(t3))
 print(next(t3))
 print(next(t3))
 print(next(t3))
-

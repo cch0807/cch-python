@@ -9,7 +9,7 @@ from types import MappingProxyType
 
 # 읽기 전용(쓰거나 추가 x)
 
-d = {'key1': 'value1'}
+d = {"key1": "value1"}
 
 # Read Only
 d_frozen = MappingProxyType(d)
@@ -23,20 +23,20 @@ print(d_frozen, id(d_frozen))
 # d_frozen['key2'] = 'value2'
 
 # 수정 가능
-d['key2'] = 'value2'
+d["key2"] = "value2"
 
 print(d)
 
 print()
 print()
 
-s1 = {'Apple', 'Orange', 'Apple', 'Orange', 'Kiwi'}
-s2 = set({'Apple', 'Orange', 'Apple', 'Orange', 'Kiwi'})
+s1 = {"Apple", "Orange", "Apple", "Orange", "Kiwi"}
+s2 = set({"Apple", "Orange", "Apple", "Orange", "Kiwi"})
 s3 = {3}
 s4 = set()
-s5 = frozenset({'Apple', 'Orange', 'Apple', 'Orange', 'Kiwi'})
+s5 = frozenset({"Apple", "Orange", "Apple", "Orange", "Kiwi"})
 
-s1.add('Melon')
+s1.add("Melon")
 
 print(s1)
 
@@ -52,14 +52,14 @@ print(s5, type(s5))
 # 바이트 코드 -> 파이썬 인터프리터 실행
 from dis import dis
 
-print('-'* 70)
-print(dis('{10}'))
-print('-'* 70)
-print(dis('set([10])'))
+print("-" * 70)
+print(dis("{10}"))
+print("-" * 70)
+print(dis("set([10])"))
 
 # 지능형 집합(Comprehending)
-print('-'*70)
+print("-" * 70)
 
 from unicodedata import name
 
-print({name(chr(i),'') for i in range(0, 256)})
+print({name(chr(i), "") for i in range(0, 256)})

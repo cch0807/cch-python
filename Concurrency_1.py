@@ -6,7 +6,7 @@
 # collections, text file, list, Dict, Set, Tuple, unpacking, *args... : iterable
 
 # 반복 가능한 이유? -> iter(x), 함수 호출
-t = 'ABCD'
+t = "ABCD"
 
 # print(dir(t))
 
@@ -27,7 +27,7 @@ while True:
     try:
         print(next(w))
     except StopIteration:
-        print('stop')
+        print("stop")
         break
 
 print()
@@ -36,7 +36,7 @@ print()
 from collections import abc
 
 # print(dir(t))
-print(hasattr(t, '__iter__'))
+print(hasattr(t, "__iter__"))
 print(isinstance(t, abc.Iterable))
 
 print()
@@ -46,21 +46,22 @@ print()
 class WordSplitter:
     def __init__(self, text):
         self._idx = 0
-        self._text = text.split(' ')
-    
-    def __next__(self):
-        print('Called __next__')
-        try:
-            word=  self._text[self._idx]
-        except IndexError:
-            raise StopIteration('Stopped Iteration. ^_^*')
-        self._idx +=1 
-        return word
-    
-    def __repr__(self):
-        return 'WordSplit(%s)' % (self._text)
+        self._text = text.split(" ")
 
-wi = WordSplitter('Do Today What you could do tommorrow')
+    def __next__(self):
+        print("Called __next__")
+        try:
+            word = self._text[self._idx]
+        except IndexError:
+            raise StopIteration("Stopped Iteration. ^_^*")
+        self._idx += 1
+        return word
+
+    def __repr__(self):
+        return "WordSplit(%s)" % (self._text)
+
+
+wi = WordSplitter("Do Today What you could do tommorrow")
 
 print(wi)
 
@@ -81,19 +82,21 @@ print()
 # 2. 단위 실행 가능한 코루틴(corutine) 구현과 연동
 # 3. 작은 메모리 조각 사용
 
+
 class WordSplitGenerator:
     def __init__(self, text):
-        self._text = text.split(' ')
-    
+        self._text = text.split(" ")
+
     def __iter__(self):
         for word in self._text:
-            yield word # 제네레이터
+            yield word  # 제네레이터
         return
-    
-    def __repr__(self):
-        return 'WordSplitGenerator(%s)' % (self._text)
 
-wg = WordSplitGenerator('Do today what you could do tommorrow')
+    def __repr__(self):
+        return "WordSplitGenerator(%s)" % (self._text)
+
+
+wg = WordSplitGenerator("Do today what you could do tommorrow")
 
 wt = iter(wg)
 
