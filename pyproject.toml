@@ -9,6 +9,7 @@ packages = [{include = "python_study"}]
 [tool.poetry.dependencies]
 python = "^3.8"
 bs4 = "^0.0.1"
+mypy = "^0.971"
 
 
 [tool.poetry.group.dev.dependencies]
