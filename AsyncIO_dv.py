@@ -53,7 +53,7 @@ async def fetch(url, executor):
 
     print("Thread Name : ", threading.current_thread().getName(), "Done", url)
 
-    # 결과 반환
+    # 결과 반환p
     # return res.read()[0:5]
     return result_data
 
