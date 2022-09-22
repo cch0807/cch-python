@@ -17,7 +17,7 @@ n = 10
 
 # print(type(n))
 
-print(n + 100) 
+print(n + 100)
 print(n.__add__(100))
 # print(n.__doc__)
 print(n.__bool__(), bool(n))
@@ -31,27 +31,27 @@ class Fruit:
     def __init__(self, name, price):
         self._name = name
         self._price = price
-    
+
     def __str__(self):
-        return f'Fruit Class Info : {self._name}, {self._price}'
-    
+        return f"Fruit Class Info : {self._name}, {self._price}"
+
     def __add__(self, x):
-        print('Called >>  __add__')
+        print("Called >>  __add__")
         return self._price + x._price
 
     def __sub__(self, x):
-        print('Called >>  __sub__')
+        print("Called >>  __sub__")
         return self._price - x._price
 
     def __le__(self, x):
-        print('Called >>  __le__')
+        print("Called >>  __le__")
         if self._price <= x._price:
             return True
         else:
             return False
-        
+
     def __ge__(self, x):
-        print('Called >>  __ge__')
+        print("Called >>  __ge__")
         if self._price >= x._price:
             return True
         else:
@@ -59,10 +59,10 @@ class Fruit:
 
 
 # 인스턴스 생성
-s1 = Fruit('Orange', 7500)
-s2 = Fruit('Banana', 3000)
+s1 = Fruit("Orange", 7500)
+s2 = Fruit("Banana", 3000)
 
-print(s1+s2)
+print(s1 + s2)
 
 # 일반적인 계산(효율이 너무 안좋음)
 print(s1._price + s2._price)

@@ -11,7 +11,7 @@
 #     start_time = time.time()
 #     for i in range(10000000):
 #         increased_num += 1
-    
+
 #     print("--- %s second ---" % (time.time() - start_time))
 
 #     print("increased_num=", end=""), print(increased_num)
@@ -63,7 +63,7 @@
 
 #     for t in threads:
 #         t.join()
-    
+
 #     print("--- %s seconds ---" % (time.time() - start_time))
 
 #     print(f'shared_number={shared_number}')
@@ -74,25 +74,28 @@ import threading
 import time
 
 shared_number = 0
-lock = threading.Lock() # threading에서 Lock 함수 가져오기
+lock = threading.Lock()  # threading에서 Lock 함수 가져오기
+
 
 def thread_1(number):
     global shared_number
     print(f"number = {number}")
 
-    lock.acquire() # 작업이 끝나기 전까지 다른 쓰레드가 공유데이터 접근 금지
+    lock.acquire()  # 작업이 끝나기 전까지 다른 쓰레드가 공유데이터 접근 금지
     for i in range(number):
         shared_number += 1
-    lock.release() # lock 해제
+    lock.release()  # lock 해제
+
 
 def thread_2(number):
     global shared_number
     print(f"number = {number}")
 
-    lock.acquire() # thread_2 잠금
+    lock.acquire()  # thread_2 잠금
     for i in range(number):
         shared_number += 1
-    lock.release() # lock 해제
+    lock.release()  # lock 해제
+
 
 # def thread_3(number):
 #     global shared_number
@@ -101,17 +104,17 @@ def thread_2(number):
 #     for i in range(number):
 #         shared_number += 1
 
-if __name__== "__main__":
+if __name__ == "__main__":
 
-    threads= []
+    threads = []
 
     start_time = time.time()
 
-    t1 = threading.Thread(target= thread_1, args=(50000000,))
+    t1 = threading.Thread(target=thread_1, args=(50000000,))
     t1.start()
     threads.append(t1)
 
-    t2 = threading.Thread(target= thread_2, args=(50000000,))
+    t2 = threading.Thread(target=thread_2, args=(50000000,))
     t2.start()
     threads.append(t2)
 
@@ -121,8 +124,8 @@ if __name__== "__main__":
 
     for t in threads:
         t.join()
-    
+
     print("--- %s seconds ---" % (time.time() - start_time))
 
-    print(f'shared_number={shared_number}')
-    print(f'end of {__name__}')
+    print(f"shared_number={shared_number}")
+    print(f"end of {__name__}")

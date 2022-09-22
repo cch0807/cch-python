@@ -27,8 +27,9 @@ WORK_LIST = [10000, 1000000, 10000000, 100000000]
 # 동시성 합계 계산 메인 함수
 # 누적 합계 함수(제네레이터)
 
+
 def sum_generator(n):
-    return sum(n for n in range(1, n+1))
+    return sum(n for n in range(1, n + 1))
 
 
 def main():
@@ -48,10 +49,11 @@ def main():
     end_time = time.time() - start_time
 
     # 출력 포멧
-    msg = '\n Result -> {} Time : {:.2f}s'
+    msg = "\n Result -> {} Time : {:.2f}s"
     # 최종 결과 출력
     print(msg.format(list(result), end_time))
 
+
 # 실행
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
