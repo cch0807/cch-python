@@ -41,3 +41,14 @@ def ExcuteTimerDc(msg):
         yield start
     except BaseException as e:
         print("Logging exception {}: {}".format(msg, e))
+        raise
+    else:  # __exit__
+        print("{}: {}s".format(msg, time.monotonic() - start))
+
+
+with ExcuteTimerDc("Start Job!") as v:
+    print("Received start monotonic2 : {}".format(v))
+    # Excute job.
+    for i in range(10000000):
+        pass
+    raise ValueError("occurred.")
