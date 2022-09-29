@@ -20,7 +20,7 @@ print(l_leng1)
 from collections import namedtuple
 
 # 네임드 튜플 선언
-Point = namedtuple('Point', 'x y')
+Point = namedtuple("Point", "x y")
 
 pt3 = Point(1.0, 5.0)
 pt4 = Point(2.5, 1.5)
@@ -34,17 +34,17 @@ l_leng2 = sqrt((pt3.x - pt4.x) ** 2 + (pt3.y - pt4.y) ** 2)
 print(l_leng2)
 
 # 네임드 튜플 선언 방법
-Point1 = namedtuple('Point1', ['x', 'y'])
-Point2 = namedtuple('Point2', 'x, y')
-Point3 = namedtuple('Point3', 'x y')
+Point1 = namedtuple("Point1", ["x", "y"])
+Point2 = namedtuple("Point2", "x, y")
+Point3 = namedtuple("Point3", "x y")
 # class 는 예약어
-Point4 = namedtuple('Point', 'x y x class', rename=True) # rename 의 Default 가 False이다.
+Point4 = namedtuple("Point", "x y x class", rename=True)  # rename 의 Default 가 False이다.
 
 # 출력
 print(Point1, Point2, Point3, Point4)
 
 # Dict to Unpacking
-temp_dict = {'x': 75, 'y': 55}
+temp_dict = {"x": 75, "y": 55}
 
 # 객체 생성
 p1 = Point1(x=10, y=35)
@@ -91,17 +91,17 @@ print(p1._asdict())
 # 실 사용 예시
 # 반 20명, 4개의 반(A,B,C,D) B14 D18
 
-Classes = namedtuple('Classes', ['rank', 'number'])
+Classes = namedtuple("Classes", ["rank", "number"])
 
 # 그룹 리스트 선언
 numbers = [str(n) for n in range(1, 21)]
-ranks = 'A B C D'.split()
+ranks = "A B C D".split()
 
 print(numbers)
 print(ranks)
 
 # List Comprehension
-students1 = [Classes(rank, number)for rank in ranks for number in numbers]
+students1 = [Classes(rank, number) for rank in ranks for number in numbers]
 
 print(len(students1))
 print(students1)
@@ -109,9 +109,9 @@ print(students1)
 # 추천
 students2 = [
     Classes(rank, number)
-    for rank in 'A B C D'.split()
-    for number in [str(n) for n in range(1,21)]
-    ]
+    for rank in "A B C D".split()
+    for number in [str(n) for n in range(1, 21)]
+]
 
 print(len(students2))
 print(students2)
@@ -119,4 +119,3 @@ print(students2)
 # 출력
 for s in students2:
     print(s)
-

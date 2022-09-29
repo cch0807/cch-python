@@ -2,7 +2,8 @@
 # 규모가 큰 프로젝트(프로그램) -> 함수 중심 -> 데이터 방대 -> 복잡
 # 클래스 중심 -> 데이터 중심 -> 객체로 관리
 
-class Car():
+
+class Car:
     """
     Car class
     Author : Choi
@@ -12,32 +13,35 @@ class Car():
     # 클래스 변수(모든 인스턴스가 공유)
     car_count = 0
 
-
     def __init__(self, company, details):
         self._company = company
         self._details = details
         Car.car_count += 1
-    
+
     # 비공식적인 즉 print문으로 문자열을 출력하는 사용자 입장의 출력을 원할 때는 str 메서드 사용
     def __str__(self):
-        return f'str : {self._company} - {self._details}'
-    
+        return f"str : {self._company} - {self._details}"
+
     # 객체, 이 자료형의 타입에 따른 객체를 그대로 표시해줄 때 사용
     def __repr__(self):
-        return f'repr : {self._company} - {self._details}'
-    
+        return f"repr : {self._company} - {self._details}"
+
     def detail_info(self):
-        print(f'Current ID : {id(self)}')
+        print(f"Current ID : {id(self)}")
         # print(f'Car Detail Info : {self._company} {self._details.}')
-        print('Car Detail Info : {} {}'.format(self._company,self._details.get('price')))
+        print(
+            "Car Detail Info : {} {}".format(self._company, self._details.get("price"))
+        )
 
     def __del__(self):
-        print('del 호출 확인')
+        print("del 호출 확인")
         Car.car_count -= 1
+
+
 # Self 의미
-car1 = Car('Ferrari', {'color': 'White', 'horse': 400, 'price': 8000})
-car2 = Car('Bmw', {'color': 'Black', 'horse': 250, 'price': 5000})
-car3 = Car('Forshe', {'color': 'Red', 'horse': 330, 'price': 6000})
+car1 = Car("Ferrari", {"color": "White", "horse": 400, "price": 8000})
+car2 = Car("Bmw", {"color": "Black", "horse": 250, "price": 5000})
+car3 = Car("Forshe", {"color": "Red", "horse": 330, "price": 6000})
 
 # ID 확인
 print(id(car1))

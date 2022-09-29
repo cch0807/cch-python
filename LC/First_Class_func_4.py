@@ -19,6 +19,7 @@
 import time
 from unittest import result
 
+
 def perf_clock(func):
     def perf_clocked(*args):
         # 함수 시작 시간
@@ -30,19 +31,23 @@ def perf_clock(func):
         # 실행 함수명
         name = func.__name__
         # 함수 매개변수
-        arg_str = ', '.join(repr(arg) for arg in args)
+        arg_str = ", ".join(repr(arg) for arg in args)
         # 결과 출력
-        print(f'{et} {name} {arg_str}  -> {result}')
+        print(f"{et} {name} {arg_str}  -> {result}")
         return result
+
     return perf_clocked
+
 
 @perf_clock
 def time_func(seconds):
     time.sleep(seconds)
 
+
 @perf_clock
 def sum_func(*numbers):
     return sum(numbers)
+
 
 # 데코레이터 미사용
 
@@ -52,10 +57,10 @@ none_deco2 = perf_clock(sum_func)
 print(none_deco1, none_deco1.__code__.co_freevars)
 print(none_deco2, none_deco2.__code__.co_freevars)
 
-print('-' * 40, 'Called None Decorator -> time_func')
+print("-" * 40, "Called None Decorator -> time_func")
 print()
 none_deco1(1.5)
-print('-' * 40, 'Called None Decorator -> sum_func')
+print("-" * 40, "Called None Decorator -> sum_func")
 print()
 none_deco2(100, 200, 300, 400, 500)
 
@@ -63,9 +68,9 @@ print()
 print()
 
 # 데코레이터 사용
-print('-' * 40, 'Called Decorator -> time_func')
+print("-" * 40, "Called Decorator -> time_func")
 print()
 time_func(1.5)
-print('-' * 40, 'Called Decorator -> sum_func')
+print("-" * 40, "Called Decorator -> sum_func")
 print()
 sum_func(1.5)
