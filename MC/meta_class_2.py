@@ -80,6 +80,7 @@ s3 = type(
     "SampleEx",
     (object,),
     dict(attr1=30, attr2=100, add=lambda x, y: x + y, mul=lambda x, y: x * y),
+    # {'attr1': 30, 'attr2': 100, 'add': lambda x,y : x + y, 'mul': lambda x,y: x * y}
 )
 
 
