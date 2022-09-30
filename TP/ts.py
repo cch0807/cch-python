@@ -45,13 +45,16 @@ class test_Robot:
         return self.test_num
 
 
-def test():
-    name2 = "test"
-    code2 = 1234
-    return (name2, code2)
+# def test():
+#     name2 = "test"
+#     code2 = 1234
+#     return (name2, code2)
 
 
-test = Robot().tests()
+tests = test_Robot(3)
+
+print(tests.age)
+print(test_Robot.__dict__)
 
 
 class ParentEx2:
@@ -71,4 +74,4 @@ class ChildEx2(ParentEx2):
         print(test.value)
 
 
-c = ChildEx2().sum_value()
+# c = ChildEx2().sum_value()
