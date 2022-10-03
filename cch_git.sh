@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# 현재 branch로 푸쉬
+git config --global push.default current
+
 dt=$(date +'%Y%m%d_%s')
 res="git status"
 
@@ -17,7 +21,7 @@ read commit_message
 
 git commit -m $commit_message
 
-git push origin mac
+git push
 
 $res
 
