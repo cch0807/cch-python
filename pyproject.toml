@@ -10,6 +10,7 @@ packages = [{include = "python_study"}]
 python = "^3.8"
 bs4 = "^0.0.1"
 mypy = "^0.971"
+image = "^1.5.33"
 
 
 [tool.poetry.group.dev.dependencies]
