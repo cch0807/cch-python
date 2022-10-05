@@ -23,10 +23,11 @@ print(wos.__dict__)
 
 
 class WithSlotClass:
-    __slots__ = ["__name", "__age", "value"]
+    __slots__ = ["__name", "__age", "value", "value2"]
 
     def __init__(self, name, age):
         self.value = 0
+        self.value2 = 3
         self.__name = name
         self.__age = age
 
@@ -54,6 +55,9 @@ class WithSlotClass:
     def age(self):
         del self.__age
 
+    def test_value(self):
+        return self.value, self.value2
+
 
 ws = WithSlotClass("cch", 12)
 
@@ -79,7 +83,10 @@ def repeat(obj):
 
 
 def test_de(obj):
-    obj.name = "cch"
+    # obj.value = 20
+    obj.name = "asdf"
+    print(obj.test_value())
+    return obj.value, obj.name
 
 
 use_slot_time = timeit.repeat(repeat(ws), number=99999)
@@ -88,3 +95,7 @@ no_slot_time = timeit.repeat(repeat(wos), number=99999)
 print(ws.value)
 print("use slot: ", min(use_slot_time))
 print("no slot: ", min(no_slot_time))
+
+test = test_de(ws)
+
+print(test)
