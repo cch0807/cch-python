@@ -26,6 +26,8 @@ def main():
     processes = list()
 
     # 프로세스 메모리 공유 확인
+    # from multiprocess import shared_memory 사용 가능버전(파이썬 3.8)
+    # from multiprocess import Manager 사용 가능
     # share_numbers = Array("i", range(50))
     share_value = Value("i", 0)
 
