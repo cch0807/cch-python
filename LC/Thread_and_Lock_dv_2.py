@@ -32,6 +32,7 @@ def run(n):
     for i in range(10):
         print(f"{n} {i}")
         lock.acquire()
+
         tmp = total_footprint
         # time.sleep(0.1)
         total_footprint = tmp + i
