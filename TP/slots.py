@@ -10,6 +10,7 @@ class WithoutSlotClass:
     def __init__(self, name, age):
         self.name = name
         self.age = age
+        self.value = 0
 
 
 wos = WithoutSlotClass("cch", 12)
@@ -22,11 +23,40 @@ print(wos.__dict__)
 
 
 class WithSlotClass:
-    __slots__ = ["name", "age"]
+    __slots__ = ["__name", "__age", "value", "value2"]
 
     def __init__(self, name, age):
-        self.name = name
-        self.age = age
+        self.value = 0
+        self.value2 = 3
+        self.__name = name
+        self.__age = age
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, new_name):
+        self.__name = new_name
+
+    @property
+    def age(self):
+        return self.__age
+
+    @age.setter
+    def age(self, new_age):
+        self.__age = new_age
+
+    @name.deleter
+    def name(self):
+        del self.__name
+
+    @age.deleter
+    def age(self):
+        del self.__age
+
+    def test_value(self):
+        return self.value, self.value2
 
 
 ws = WithSlotClass("cch", 12)
@@ -45,14 +75,27 @@ def repeat(obj):
     def inner():
         obj.name = "cch"
         obj.age = 12
+        obj.value = 30
         del obj.name
         del obj.age
 
     return inner
 
 
+def test_de(obj):
+    # obj.value = 20
+    obj.name = "asdf"
+    print(obj.test_value())
+    return obj.value, obj.name
+
+
 use_slot_time = timeit.repeat(repeat(ws), number=99999)
 no_slot_time = timeit.repeat(repeat(wos), number=99999)
 
+print(ws.value)
 print("use slot: ", min(use_slot_time))
 print("no slot: ", min(no_slot_time))
+
+test = test_de(ws)
+
+print(test)

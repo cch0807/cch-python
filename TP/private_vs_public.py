@@ -94,7 +94,6 @@ class Robot:
 # print(ssss._age)
 
 droid = Robot("r2d2", 2)
-
 # print(droid.agesss)
 
 droid.age = 7  # error
