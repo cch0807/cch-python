@@ -2,43 +2,38 @@
 Concurrency, CPU Bound vs I/O Bound - I/O Bound(1) - Synchronous
 Keyword - I/O Bound, requests
 """
-import concurrent.futures
-import threading
+import multiprocessing
 import requests
 import time
 
+# 각 프로세스 메모리 영역에 생성되는 객체(독립적)
+# 함수 실행 할 때 마다 객체 생성은 좋지 않음. -> 각 프로세스마다 할당
 
-# 각 스레드에 생성되는 객체(독립된 네임스페이스)
-thread_local = threading.local()
+session = None
 
 
-def get_session():
-    if not hasattr(thread_local, "session"):
-        thread_local.session = requests.Session()
-    return thread_local.session
+def set_global_session():
+    global session
+    if not session:
+        session = requests.Session()
 
 
 # 실행함수1 (다운로드)
 def request_site(url):
-    # 세션 확인
-    # print(session)
-    # print(session.headers)
-
-    # 세션 획득
-    session = get_session()
 
     with session.get(url) as response:
+        name = multiprocessing.current_process().name
         print(
-            f"[Read Contents : {len(response.content)}, Status Code : {response.status_code} from {url}"
+            f"[{name} -> Read Contents : {len(response.content)}, Status Code : {response.status_code} from {url}"
         )
 
 
 # 실행함수2 (요청)
 def requests_all_sites(urls):
-    # 멀티스레드 실행
-    # 반드시 max_worker 개수 조절 후 session 객체 확인
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        executor.map(request_site, urls)
+    # 멀티프로세싱 실행
+    # 반드시 processes 개수 조절 후 session 객체 및 실행 시간 확인
+    with multiprocessing.Pool(initializer=set_global_session, processes=4) as pool:
+        pool.map(request_site, urls)
 
 
 def main():
