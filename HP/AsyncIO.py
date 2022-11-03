@@ -13,6 +13,13 @@ import time
 import asyncio
 
 
+async def exe_calculate_async(name, n):
+    for i in range(1, n + 1):
+        print(f"{name} -> {i} of {n} is calculating...")
+        asyncio.sleep(1)
+    print(f"{name} - {n} working done!")
+
+
 def exe_calculate_sync(name, n):
     for i in range(1, n + 1):
         print(f"{name} -> {i} of {n} is calculating...")
@@ -31,6 +38,29 @@ def process_sync():
     print(f">>> total seconds : {end - start}")
 
 
+async def process_async():
+    start = time.time()
+
+    await asyncio.wait(
+        [
+            exe_calculate_async("One", 3),
+            exe_calculate_async("Two", 2),
+            exe_calculate_async("Three", 1),
+        ]
+    )
+
+    end = time.time()
+
+    print(f">>> total seconds : {end - start}")
+
+
 if __name__ == "__main__":
-    # Sync 실행
-    process_sync()
+    # Sync(동기) 실행
+    # process_sync()
+
+    # Async(비동기) 실행
+    # Python 3.7 이상
+    asyncio.run(process_async())
+
+    # Python 3.7 이하
+    # asyncio.get_evnet_loop().run_until_complete(process_async())
