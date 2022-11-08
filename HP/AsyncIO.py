@@ -61,6 +61,7 @@ if __name__ == "__main__":
     # Async(비동기) 실행
     # Python 3.7 이상
     asyncio.run(process_async())
+    print("start")
 
     # Python 3.7 이하
     # asyncio.get_evnet_loop().run_until_complete(process_async())
