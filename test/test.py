@@ -66,3 +66,22 @@ class test_cls2:
 test_tc1 = test_cls1()
 
 test_tc1.call_tc2()
+
+test_set = (1, 2, 3)
+print(test_set[0])
+
+test_dict = {"one": 1, "two": 2}
+
+print(test_dict["one"])
+
+for i in range(10):
+    print(i)
+
+
+def set_test_func():
+    return (1, 2)
+
+
+num1, num2 = set_test_func()
+
+print(num1, num2)
