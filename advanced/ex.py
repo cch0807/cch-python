@@ -59,3 +59,7 @@ repeat(greet, "Dale")
 
 def toStrings(nums: Iterable[int]) -> List[int]:
     return [str(x) for x in nums]
+
+
+# 따라서 위 함수는 리스트 뿐만 아니라 튜플, 세트까지 처리할 수 있는 유연한 API를 가지게 된다.
+# typing 모듈은 Iterable 뿐만 아니라 Sequence, Mapping, MutableMapping 와 같은 여러가지 추상 타입을 지원한다.
