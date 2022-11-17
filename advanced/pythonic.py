@@ -124,3 +124,141 @@ converted_list = list(set(map(lambda string: string.lower(), test_list))) # test
 
 # lambda를 익명 함수라고 한다. 뒤에 있는 string은 각각의 값을 string이라고 지칭하는것이다.
 # 즉, 각각의 데이터를 소문자로 바꾸고, 그걸 set로 바꾸고, 다시 list로 돌린것이다.
+
+# dictionary
+
+fruit = ['apple', 'grape', 'orange', 'banana']
+price = [3200, 15200, 9800, 5000]
+_dict = {}
+
+for i in range(len(price)):
+    _dict.append((fruit[i], price[i])) # {'apple': 3200, 'grape': 15200, 'orange': 9000, 'banana': 5000}
+
+# dictionary를 위와 같이 생성한다면 zip을 살펴보자.
+
+fruit = ['apple', 'grape', 'orange', 'banana']
+price = [3200, 15200, 9000, 5000]
+
+_dict = dict(zip(fruit, price))
+
+# 생성완료!
+# 일반적으로 딕셔너리에서 없는 값을 찾으려고 하면, 오류가 발생한다.
+
+fruit = ['apple', 'grape', 'orange', 'banana']
+price = [3200, 15200, 9800, 5000]
+_dict = dict(zip(fruit, price))
+
+print(_dict['strawberry']) # Error!
+
+# 그래서 이걸 회피하기 위해, 처음 배우는 분들은 in 옵션을 사용해서 데이터가 있는지 확인하고, 없으면 값을 추가하고, 있으면 출력하는 방식으로 넘어간다.
+# 그런데, 꼭 if 를 사용해야할까? 
+
+fruit = ['apple', 'grape', 'orange', 'banana']
+price = [3200, 15200, 9800, 5000]
+_dict = dict(zip(fruit, price))
+
+print(_dict.setdefault('strawberry', 0)) 
+# setdefault는 딕셔너리에 값이 있을 땐 해당 값을 리턴하고, 값이 없을 땐 두번째 인자로 넘겨준 값을 추가하고 추가한 값을 리턴한다.
+# 참고로 해당 메소드를 활용한 유사 dictionary가 있다. 우리는 이것을 defaultdict 라고 부른다.
+
+from collections import defaultdict
+
+movie_review = [('Train to Busan', 4), ('Clementine', 5), ('Parasite', 4.5), ('Train to Busan', 4.2), ('Train to Busan', 4.5), ('Clementine', 5)]
+
+index = defaultdict(list)
+
+for review in movie_review:
+    index[review[0]].append(review[1])
+
+# defaultdict에서 값을 검색할 때, 값이 없으면 인자로 넘겨준 값이 default 값이 된다. 결국 찾을 때 마다 setdefault를 암묵적으로 실행해준다고 생각하면 된다.
+# 위에서 unpacking을 배울 때, 리스트나 튜플에서 사용할 수 있는 방법을 배웠다. 그런데 dictionary는 원소가 쌓이는데, 이걸 어떻게 해야 unpacking할 수 있을까?
+
+fruit = ['apple', 'grape', 'orange', 'banana']
+price = [3200, 15200, 9800, 5000]
+_dict = dict(zip(fruit, price))
+
+print(*_dict.keys()) # apple grape orange banana
+print(*_dict.values()) # 3200 15200 9800 5000
+print(*_dict.items()) # ('apple', 3200) ('grape', 15200) ....
+
+# Sorting
+# 정렬은 sort() 라는 메소드가 있고, sorted() 라는 함수가 있다.
+# 하나는 메소드고 하나는 함수? 정확히 말하자면 전자의 경우 리스트를 내부 정렬하는 메소드 이다.
+# 후자는 컨테이너형 데이터를 받아 정렬된 리스트를 돌려주는 함수이다.
+
+_list = [5, 6, 4, 8, 2, 3]
+sorted_list = sorted(_list) # 2, 3, 4, 5, 6, 8
+_list.sort()
+print(_list) # 2, 3, 4, 5, 6 , 8
+
+_set = {65, 12, 15, 156, 31, 54, 94, 82, 31}
+_set.sort() # Error
+print(sorted(_set)) # 12, 15, 31, 54, 65, 82, 94, 156
+
+# sorted()의 출력값이 리스트라는 것에 주목해야한다. 애초에 dictionary와 셋은 순서가 없다.
+
+# 내림차순 정렬은 쉽다.
+
+_list = [5, 6, 4, 8, 2, 3]
+sorted_list = sorted(_list, reversed = True) # 8, 6, 5, 4, 3, 2
+
+# 튜플의 리스트를 정렬하고 싶은데, 첫번째 값으로 오름차순 정렬을 하는데 값이 같으면 두번째 값으로 내림차순 정렬하고 싶다?
+# 정렬 기준이 복잡할 때 우선 문제를 해결하기 전에, 정렬 함수의 또 다른 옵션을 보자.
+
+_list = [(1, 3), (8, 2), (2, 5), (4, 7)]
+sorted_list = sorted(_list, key = lambda dt: dt[1]) # (8, 2), (1, 3), (2, 5), (4, 7)
+
+# lambda ? 우선 key는 함수를 입력 받는다. 즉, lambda는 함수라는 것을 알 수 있다.
+
+# 정확히 말해서, lambda는 익명 함수라는 것으로, 함수의 이름을 명시하지 않고 일회성으로 사용하기 위해 정의하는 것이다.
+# 여기서 dt는 함수에서 사용할 변수명으로, dt는 각각의 튜플을 저런식으로 사용하겠다는 것이다.
+
+# 즉, 저 문구를 정리하면, 튜플의 첫번째 값을 기준으로 정렬하겠다. 라는 것이다.
+
+_list = [(1, 3), (8, 2), (2, 5), (4, 7)]
+sorted_list = sorted(_list, key = lambda dt: (dt[1], -dt[0])) 
+
+# lambda를 사용하면 정말 다양한 방식으로 정렬할 수 있다.
+
+_list = ['CHicken', 'hamburger', 'Sushi', 'chocolate']
+
+print(sorted(_list)) # ['CHicken', 'Sushi', 'chocolate', 'hamburger']
+print(sorted(_list, key = lambda dt: dt.lower())) # ['CHicken', 'chocolate', 'hamburger', 'Sushi']
+
+# 일반적으로 문자열은 대소관계를 비교하기 때문에, 다음과 같이 모두 소문자로 바꿔버리면 대소관계 상관없이 정렬을 할 수 있다.
+
+# 문자열
+# 코딩테스트를 파이썬으로 보는 사람들이 일부는 문자열 처리의 장점을 내새운다.
+# 실제로 파이썬은 다른 언어보다 문자열 처리가 좀 편하다.
+
+# strip()은 공백을 제거하는 함수다?
+
+print('    asdasd    '.strip()) # asdasd
+
+# 사실 이건 공백을 제거하는 함수가 아니다.
+
+print('====chicken===='.strip('=')) # chicken
+
+# 짜잔! 양 끝에 있는 문자열을 제거하는 함수였다.
+# 인자를 넘겨주지 않으면 공백 문자로 인식해서 공백을 제거했던 것일 뿐이다.
+# 참고로, 두개 이상의 문자열을 넣어주면, 두개를 모두 지워버린다. and 조건이 아니라 or 조건이다!
+
+# 문자열을 뒤집고 싶을 땐, 두 가지 방법이 있다. 
+
+string = 'I am Hungry...'
+print(string[::-1])
+print("".join(reversed(string)))
+
+# 전자의 경우, 모든 iterable한 데이터에 사용 가능하다.(즉, 리스트도 튜플도 가능)
+# 초보자들은 슬라이싱을 할 때 두개의 변수만 활용하지만, 세번째를 활용하면 더 무궁무진해진다.
+
+# 슬라이싱은 string[시작:종료(포함 안 함):간격] 구조를 띄고 있다.
+# 즉, 마지막이 2이면 0, 2, 4... 번째 문자열을 꺼내온다.
+# -1은? 역순으로 뽑아온다. 간격도 물론 조정할 수 있다.
+
+# 두번째의 경우 역순으로 뒤집은 iterator (iterable이 아니다!)을 리턴하는데, 그냥 출력하면 메모리 주소가 나오기 때문에
+# for i in ~ 구조를 사용하거나 join을 사용한다.
+
+#-------------------------------------------------------------------------------------------------------------
+
+# Combination/Permutation
