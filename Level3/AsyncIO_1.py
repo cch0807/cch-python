@@ -12,6 +12,9 @@ Keyword - asyncio
 import time
 import asyncio
 
+# I/O Bound Asyncio 예제
+# threading 보다 높은 코드 복잡도 -> Async, Await 적절하게 코딩
+
 
 async def exe_calculate_async(name, n):
     for i in range(1, n + 1):
