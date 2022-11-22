@@ -8,24 +8,26 @@ import aiohttp
 import time
 
 
-session = None
+# session = None
 
 
-def set_global_session():
-    global session
-    if not session:
-        session = aiohttp.Session()
+# def set_global_session():
+#     global session
+#     if not session:
+#         session = aiohttp.Session()
 
 
 # 실행함수1 (다운로드)
 async def request_site(session, url):
 
+    print(session.headers)
     # with session.get(url) as response:
     #     name = multiprocessing.current_process().name
     #     print(
     #         f"[{name} -> Read Contents : {len(response.content)}, Status Code : {response.status_code} from {url}"
     #     )
-    async 
+    async with session.get(url) as response:
+        print(f"Read Contents {response}, from {url}")
 
 
 # 실행함수2 (요청)
@@ -43,9 +45,9 @@ async def request_all_sites(urls):
             tasks.append(task)
 
         # 태스크 확인
-        # print(*tasks)
-        # print(tasks)
-        await asyncio.gather(*tasks, return_exception=True)
+        print(*tasks)
+        print(tasks)
+        await asyncio.gather(*tasks, return_exceptions=True)
 
 
 def main():
@@ -60,8 +62,8 @@ def main():
     start_time = time.time()
 
     # 실행
-    asyncio.run(request_all_sites(urls))
-    # asyncio.get_event_loop().run_until_complete(request_all_sites(urls))
+    # asyncio.run(request_all_sites(urls))
+    asyncio.get_event_loop().run_until_complete(request_all_sites(urls))
 
     # 실행 시간 종료
     duration = time.time() - start_time
