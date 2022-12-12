@@ -11,12 +11,15 @@ import time
 
 # 실행 함수1(계산)
 def cpu_bound(number):
-    pass
+    return sum(i * i for i in range(number))
 
 
 # 실행 함수2
-def ind_sums(numbers):
-    pass
+def find_sums(numbers):
+    results = []
+    for number in numbers:
+        results.append(cpu_bound(number))
+    return results
 
 
 def main():
@@ -33,7 +36,15 @@ def main():
 
     # 결과 출력
     print(f"Total list : {total}")
+    print(f"Sum : {sum(total)}")
+
+    # 실행 시간 종료
+    duration = time.time() - start_time
+
     print()
+
+    # 수행 시간
+    print(f"Duration : {duration} seconds")
 
 
 if __name__ == "__main__":
