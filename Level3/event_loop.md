@@ -1,5 +1,5 @@
 ### event_loop를 위한 선수지식
-# asyncio (1)
+# asyncio 
 
 - asyncio는 async/await 구문을 사용하여 동시성 코드를 작성하는 라이브러리이다.
 - asyncio는 고성능 네트워크 및 웹 서버, 데이터베이스 연결 라이브러리, 분산 작업 큐 등을 제공하는 여러 파이썬 비동기 프레임워크의 기반으로 사용된다.
@@ -515,11 +515,129 @@ loop.run_in_executor() 메소드의 첫 번째 인자로 넘어가는 None은 �
 * 만약 단일 코어 CPU라면 멀티 쓰레딩을 하더라도 병렬(Parallel) 실행이 불가하다. 병렬 실행을 하려면 멀티 코어여야 한다.
 ```
 
+# 병렬 처리 concurrent future
+```
+파이썬 제약: GIL
+Python은 두 개 이상의 스레드가 동시에 실행될 때 두 개 이상의 스레드가 하나의 자원을 동시에 엑세스할 때 발생할 수 있는 문제점을 방지하기 위해 GIL(Global Interpreter Lock)이라는 것을 도입했다.
+즉, 스레드가 실행될 때, 프로그램 내의 리소스 전체에 락이 걸린다.
+결국 Python 구현에서는 동시에 몇 개의 스레드가 실행이 되던 간에 GIL에 의해서 한 번에 하나의 스레드만 실행된다.
+멀티 스레드의 경우 문맥교환(Context Switch)에 필요한 리소스까지 고려하면 단일 스레드보다 성능이 떨어지게 되는 것을 확인할 수 있다.
+```
 
+# concurrent.future 모듈
+```
+concurrent.futures 모듈은 별도 규격의 스레드 객체를 작성하지 않고 함수 호출을 객체화하여 다른 스레드나 다른 프로세스에서 이를 실행할 수 있게 해준다.
+이 때 중심 역할을 하는 것이 Executor 클래스이다. Executor 클래스는 다시 ThreadPoolExecutor와 ProcessPoolExecutor로 나뉘는데 두 클래스의 차이는 동시성 작업을 멀티 스레드로 처리하느냐,
+멀티 프로세스로 처리하느냐만 있지 거의 동일한 기능을 제공한다.
+```
 
+# future
+```
+executor를 이용한 동시성 처리는 호출해야 할 함수와 그에 전달될 인자들을 executor에 넘겨주는 것으로 시작되는데, executor의 해당 메소드는 다른 스레드의 리턴을 기다릴 필요가 없으므로 바로 리턴하게 된다.
+이 때 리턴되는 객체가 Future 객체이며, 이 객체의 상태를 조사하여 완료 여부를 확인하거나, 해당 객체 내 작업이 완료되기를 기다리거나 혹은 미리 콜백을 넘겨놓아둘 수도 있다.
+이 객체는 asyncio의 Future 클래스와 유사한 API를 가지고 있다. (둘이 호환되는 객체는 아니다.)
 
+ex)
+    1. 실행중인 병렬 작업을 취소
+    2. 실행 중 여부, 완료 여부의 체크
+    3. 특정 타임아웃 시간 후의 결과값 확인
+    4. 완료 콜백을 추가
+    5. 동기화 코드를 매우 쉽게 작성 가능
 
+단일 스레드 비동기 코루틴을 사용하는 방식과 concurrent.futures를 이용한 병렬처리 방식은 매우 비슷한 형태로 사용 가능하다.
 
+이 Future 클래스는 자바스크림트의 Promise API와 매우 비슷하다.
+아직 완료되지 않은 (혹은 완료되었는지 당장은 모르는) 작업을 외부에서 객체로 다룰 수 있게 된다.
+다음의 메소드들이 지원된다.
+특히 하나의 작업에 대해서 하나 이상의 완료 콜백을 추가할 수 있다는 점이 흥미롭다.
+
+- cancle(): 작업 취소를 시도한다. 만약 현재 실행중이고 취소가 불가능할 경우 False을 리턴한다. 작업이 취소되었다면 True가 리턴된다.
+- canceled(): 취소가 완료된 작업이면 True를 리턴한다.
+- done(): 작업이 완료되었고 정상적으로 종료되었다면 True를 리턴한다.
+- result(): 해당 호출의 결과를 리턴한다. 만약 작업이 아직 완료되지 않았다면 최대 타임아웃시간까지 기다린다음, None을 리턴한다.
+- exception(): 해당 호출이 던진 예외를 반환한다. 역시 작업이 안료되지 않았다면 타임아웃 시간까지 기다린다.
+- add_done_callback(): 콜백함수를 Future 객체에 추가한다. 이 함수는 future 객체하나를 인자로 받는 함수이다. 콜백은 취소되거나 종료된 경우에 모두 호출된다.
+
+모듈 함수(wait.as_completed)
+wait: 특정한 타임아웃 시간 동안 대기한 다음, 그 시간동안 완료된 작업과 그렇지 않은 작업을 구분하는 두 개의 세트로 된 튜플을 리턴한다. result.done, result.not_done
+
+as_completed: future의 집합을 받아서 기다리면서 하나씩 완료되는 것 순서대로 순회하면서 반복하는 반복자를 생성하는 함수이다. executor의 map과 차이점으로는 완료되는 순서대로 순회가 가능하다.
+```
+
+# executor
+```
+Executor 객체는 풀 기반으로 작업을 관리한다. 초기화 시에 몇 개의 worker가 사용될 것인지를 정해주면 전달되는 작업들을 큐에 넣고 worker pool에서 사용 가능한 worker로 하여금 작업을 처리하게 한다.
+병렬 작업을 dispatch하며 thread나 process를 관리
+Executor 객체는 컨텍스트 매니저 프로토콜을 지원하기 때문에 with 구문 내에서 사용할 수 있다.
+
+submit(fn, *args, **kwargs)
+함수 fn에 대해 주어진 인자들을 전달하여 실행할 수 있는 Future 객체를 리턴한다. 해당 함수는 호출 즉시 스케줄링된다.
+```
+
+```
+with ThreadPoolExecutor(max_workers=1) as executor:
+    future = executor.submit(pw, 323, 1235)
+    print(future.result())
+```
+
+```
+map(func, *iterables, timeout=None)
+일반함수 map과 동일하나, 각 호출은 병렬적으로 일어난다. 만약 타임아웃 값이 지정된 경우, 맵핑 작업이 완료되지 않은 호출이 있으면 TimeoutError가 일어난다.
+타임 아웃 값을 별도로 주지 않으면 디스패치된 모든 작업들이 종료될 때까지 기다린 후 리턴한다.
+타임아웃 값이 주어진 경우에는 해당 타임아웃 내에 완료되지 못한 작업이 있을 때, 예외를 일으키게 된다.
+
+입력 데이터와 동작 함수를 짝지어서 바로 스케줄링하도록 한다. map()함수는 이터레이터를 리턴하는데, 이는 각 개별 작업이 동시에 실행 된 후, 먼저 종료된 작업부터 내놓는 리턴값을 내놓게 된다.
+(결과값은 특이하게 [Futures] 타입이 아닌 결과에 대한 제네레이터이다.)
+호출은 비동기적으로 발생하며, 결과값이 생성되는 순서가 반드시 호출이 시작된 순서와 동일하지는 않다.
+결과 list는 iterable이 전달된 순서대로 저장 되는 것이 as_completed()와의 차이점
+
+shutdown(wait=True)
+executor에게 종료 시그널을 보낸다. 시그널을 받은 executor는 실행 중 및 대기 중인 모든 future에 대해 리소스를 정리한다.
+shutdown 후에 submit이나 map을 호출하면 런타임에러가 발생한다. 만약 wait 값이 True로 정해지면 진행 및 대기중이던 작업이 종료된 후에 shutdown이 일어나고, 그 때까지 해당 함수는 리턴을 보류하게 된다.
+(만약 강제 shutdown을 피하고 싶다면 with 구문 내에서 사용한다.)
+```
+
+# Executor의 구분 - 스레드 vs 프로세스
+
+```
+Executor는 멀티스레드를 쓸 것이냐, 멀티프로세스를 쓸 것이냐에 따라 ThreadPoolExecutor와 ProcessPoolExecutor로 나뉜다.
+둘의 사용방법은 거의 동일하나 다음과 같은 차이가 있다.
+
+IO기반의 작업에 대해서 대기 시간을 줄이고 리소스 사용 효율을 늘리고 싶다면 ThreadPoolExecutor를 사용한다.
+예를 들어 HTTP통신을 이용하여 여러 곳을 순차적으로 접근하는 것보다, 멀티 스레드를 이용하면 전반적인 성능향상을 볼 수 있다.
+CPU 부하가 많은 작업을 분산처리 하는 목적이라면 ProcessPoolExecutor를 사용한다. 
+CPU 로드가 크게 걸리는 작업인 경우에는 파이썬 내에서는 GIL(Grand Interal Lock)이라는 제약이 존재하기 때문에, 멀티 스레드로는 CPU 분산 처리의 효과를 누릴 수 없다.
+멀티 프로세스는 서브 프로세스와 유사하게 __main__ 스르로를 반입하는 별도의 프로세스를 가지므로, 이를 호출하는 코드는 반드시 __main__ 모듈 내에서 호출되어야 한다.
+아래 코드 참조..
+```
+```
+from concurrent import futures
+import urllib.request
+
+URLS = ['http://www.foxnews.com/,
+        'http://www.cnn.com/,
+        'http://some-made-up-domain.com/]
+
+def load_url(url, timeout):
+    return urllib.request.urlopen(url, timeout=timeout).read()
+
+def main():
+    with futures.ThreadPoolExecutor(max_workers=5) as executor:
+        future_to_url = dict(
+            (executor.submit(load_url, url, 60), url)
+             for url in URLS)
+        for future in futures.as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                print('%r page is %d bytest' % (
+                        url, len(future.result())))
+            except Exception as e:
+                print('%r generated an exception: %s' %(
+                        url, e))
+
+if __name__ == '__main__':
+    main()
+```
 
 
 
