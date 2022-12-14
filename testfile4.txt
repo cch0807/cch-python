@@ -1,2 +1,0 @@
-Context Manager Text4.
-Contextlib Test4.
