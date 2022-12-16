@@ -25,3 +25,5 @@ Future는 Eventloop에서 자신에게 최적화된 구현체를 가질 수 있�
 # async 함수(코루틴 함수)를 콜백으로 등록하고 싶으면 어떻게 해야 할까?
 Future.add_done_callback()은 코루틴 함수가 아닌 일반 함수를 기대하기 때문에 코루틴 함수를 실행할 수는 없다. 대신 코루틴 실행을 Eventloop에 등록할 수는 있는데, Future.add_done_callback(lambda fut: asyncio.create_task(some_async_func(fut))) 같이 사용하면 된다.
 asyncio.create_task()를 사용했기 때문에 당연하게도 코루틴이 종료되는 것을 await으로 기다릴 수 없다.
+
+# concurrent.futures(다중 스레드, 비동기/Non-block 방식)
