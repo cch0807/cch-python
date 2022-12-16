@@ -12,6 +12,7 @@
 
 from abc import ABCMeta
 import asyncio
+from collections import deque
 from datetime import datetime
 import functools
 from random import randint
@@ -136,3 +137,30 @@ class BusyWaitingSemaphore(Semaphore):
     
     def release(self) -> None:
         self._value += 1
+
+# Future 발행
+# Future를 사용하면 busy waiting 방식의 polling을 걷어내고 비동기적으로 훨씬 더 효율적인 Semaphore를 만들 수 있다.
+
+class FutureSemaphore(Semaphore):
+    _waiters: deque[asyncio.Future(None)]
+    
+    def __init__(self, initial_value: int = 1) -> None:
+        super().__init__(initial_value)
+        self._waiters = deque()
+    
+    async def acquire(self) -> None:
+        if self._value <= 0:
+            loop = asyncio.get_running_loop()
+            future = loop.create_future()
+            self._waiters.append(future)
+            await future
+        self._value -= 1
+
+    
+    def release(self) -> None:
+        self._value += 1
+        if len(self._waiters) > 0:
+            fut = self._waiters.popleft()
+            fut.set_result(None)
+
+
