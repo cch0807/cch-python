@@ -28,4 +28,4 @@ print(countries)
 # print(countries.pop(0))
 # print(countries)
 
-# please spend your time to look at Python data structure
+# please look through Python data structure
