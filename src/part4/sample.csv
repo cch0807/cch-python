@@ -1,4 +1,4 @@
-country,capital,continent
-USA,WashingtonDC,North America
-South Korea,Seoul,East Asia
-Japan,Tokyo,East Asia
+country,capital,continent,population
+USA,WashingtonDC,North America,329500000
+South Korea,Seoul,East Asia,51670000
+Japan,Tokyo,East Asia,125800000
