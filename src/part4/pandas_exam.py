@@ -24,3 +24,7 @@ print(data["population"].max())
 print(data[data.population == data.population.max()])
 
 # from scratch
+grade = {"students": ["A", "B", "C"], "scores": [90, 80, 85]}
+data = pd.DataFrame(grade)
+print(data)
+data.to_csv("grade.csv")
