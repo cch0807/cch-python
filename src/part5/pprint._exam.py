@@ -26,3 +26,10 @@ description = {
 }
 
 print(description)
+print(num_length)
+
+# ljust & rjust & center
+print("|" + "hello world".ljust(30) + "|")
+print("|" + "hello world".rjust(30) + "|")
+print("|" + "hello world".center(30) + "|")
+
