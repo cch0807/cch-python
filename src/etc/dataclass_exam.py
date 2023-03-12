@@ -53,3 +53,15 @@ print(replace(car1, id=3))
 @dataclass
 class Inventory:
     cars: List[Car]
+
+inventory = Inventory([car1, car2])
+print(inventory)
+
+# inheritance
+@dataclass(frozen=True)
+class Taxi(Car):
+    owner_company: str = ""
+
+taxi1 = Taxi(1, "YELLOW", "HYUNDAI", "xyz")
+
+print(taxi1)
