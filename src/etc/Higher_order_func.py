@@ -45,3 +45,30 @@ def higher_order_example(func):
         print("end ...")
 
     return inside
+
+
+@higher_order_example
+@higher_order_example
+def sample_example():
+    print("I am inside")
+
+
+sample_example()
+
+
+def higher_order_example(func):
+    def inside():
+        print("start ...")
+        num = 1
+        func(num)
+        print("end ...")
+
+    return inside
+
+
+@higher_order_example
+def sample_example(num):
+    print(f"I am inside {num}")
+
+
+sample_example()
