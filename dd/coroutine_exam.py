@@ -56,5 +56,39 @@ Iterator의 __next__()로 StopIteration exception 이 발생할 때 까지 반�
 loop를 반복 수행
 동일한 동작은 built-in 함수인 next()를 이용하여 사용 가능
 
+"""
+
+# Generator (yield 키워드)
+"""
+Iterator를 좀 더 편하게 사용하는 방법은 다른 언어처럼 yield를 이용하여 coroutine을 지원하는 것이다.
+"""
+
+
+def test1():
+    print("print 1")
+    yield 1
+    print("print 2")
+    yield 2
+
+
+def test2():
+    for i in range(10):
+        yield i * 2
+
 
 """
+Generator는 함수안에 yield keyword가 있다는 것을 제외하고는 일반 함수와 동일
+
+- 일반 함수 호출 시: 함수의 body가 실행
+- Generator(yield가 있는 함수) 호출 시: Generator가 실행되는 것이 아니라 이 함수를 감싸는 'generator' 객체가 리턴
+Generator 객체는 iterator와 동일하게 __next__()를 가진 객체
+"""
+
+g = test1()
+type(g)
+dir(g)
+next(g)
+
+next(g)
+next(g)
+# StopIteration
